@@ -22,16 +22,17 @@ def preprocess_input(img):
 
 X_train = []
 y_train = []
-with open('track1_data\\data\\driving_log.csv') as csvfile:
+EPOCH = 10
+with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
 	i=0
 	for row in readCSV:
-		img = misc.imread('track1_data\\data\\'+row[0],mode='RGB')
+		img = misc.imread('data/'+row[0],mode='RGB')
 		X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
-		if(i>40):
-			break
+		#if(i>40):
+			#break
 		i+=1
 	X_train = np.asarray(X_train,dtype=np.float32)
 	y_train = np.asarray(y_train,dtype=np.float32)
@@ -48,7 +49,8 @@ def normalize_grayscale(image_data):
 	
 X_normalized = normalize_grayscale(X_train)
 
-
+print('Training...')
+print(len(X_train))
 model = Sequential()
 model.add(Convolution2D(24, 5, 5,subsample=(2, 2), input_shape=(66,200,3))) #160, 320, 3)))
 model.add(Activation('relu'))
@@ -70,7 +72,9 @@ model.add(Activation('relu'))
 model.add(Dense(1))
 
 model.compile('adam', 'mse', ['accuracy'])
-history = model.fit(X_normalized, y_train, nb_epoch=3, validation_split=0.2)
+history = model.fit(X_normalized, y_train, nb_epoch=EPOCH, validation_split=0.2)
+
+model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
 
 steering_angle = float(model.predict(X_normalized[1:2], batch_size=1))
 print(y_train[1:2])
