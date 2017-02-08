@@ -26,7 +26,15 @@ with open('data/driving_log.csv') as csvfile:
 	next(readCSV,None)
 	i=0
 	for row in readCSV:
-		img = misc.imread('data/'+row[0],mode='RGB')
+		file_name = row[0]
+		try:
+			if(file_name.index('Hari')):
+				file_name = file_name.split('\\')[len(file_name.split('\\'))-1]
+				file_name = 'IMG/'+file_name
+		except:
+			file_name = file_name
+			
+		img = misc.imread('data/'+file_name,mode='RGB')
 		X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
 		i+=1
