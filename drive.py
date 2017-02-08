@@ -72,7 +72,7 @@ def normalize_grayscale(image_data):
     b = 0.5
     grayscale_min = 0
     grayscale_max = 255
-    return a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
+    return image_data/255 #a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Remote Driving')

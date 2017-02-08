@@ -20,7 +20,7 @@ def preprocess_input(img):
 
 X_train = []
 y_train = []
-EPOCH = 10
+EPOCH = 50
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
@@ -38,6 +38,8 @@ with open('data/driving_log.csv') as csvfile:
 		X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
 		i+=1
+		#if(i==30000):
+		#	break
 	X_train = np.asarray(X_train,dtype=np.float32)
 	y_train = np.asarray(y_train,dtype=np.float32)
 
@@ -49,7 +51,9 @@ def normalize_grayscale(image_data):
     b = 0.5
     grayscale_min = 0
     grayscale_max = 255
-    return a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
+    return image_data/255
+    #return a+st1
+    #return a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
 	
 X_normalized = normalize_grayscale(X_train)
 
@@ -90,3 +94,4 @@ model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
 steering_angle = float(model.predict(X_normalized[1:2], batch_size=1))
 print(y_train[1:2])
 print(steering_angle)
+
