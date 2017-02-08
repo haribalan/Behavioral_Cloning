@@ -5,12 +5,10 @@ from sklearn.utils import shuffle
 import cv2
 import matplotlib.pyplot as plt
 from scipy import misc
-from keras.models import Sequential
-from keras.models import Sequential
+from keras.models import Sequential,load_model
 from keras.layers.core import Dense, Activation, Flatten, Dropout
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
-
 
 def roi(img): 
     img = img[60:140,40:280]
@@ -31,8 +29,6 @@ with open('data/driving_log.csv') as csvfile:
 		img = misc.imread('data/'+row[0],mode='RGB')
 		X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
-		#if(i>40):
-			#break
 		i+=1
 	X_train = np.asarray(X_train,dtype=np.float32)
 	y_train = np.asarray(y_train,dtype=np.float32)
@@ -49,30 +45,36 @@ def normalize_grayscale(image_data):
 	
 X_normalized = normalize_grayscale(X_train)
 
+try:
+	model = load_model('my_model.h5')
+	print('Model Loaded From Saved h5 file and used')
+except:
+	model = Sequential()
 
-model = Sequential()
+	model.add(Convolution2D(24, 5, 5,subsample=(2, 2), input_shape=(66,200,3),activation='relu')) #160, 320, 3)))
 
-model.add(Convolution2D(24, 5, 5,subsample=(2, 2), input_shape=(66,200,3),activation='relu')) #160, 320, 3)))
+	model.add(Convolution2D(36, 5, 5,subsample=(2, 2),activation='relu'))
 
-model.add(Convolution2D(36, 5, 5,subsample=(2, 2),activation='relu'))
+	model.add(Convolution2D(48, 5, 5,subsample=(2, 2),activation='relu'))
 
-model.add(Convolution2D(48, 5, 5,subsample=(2, 2),activation='relu'))
+	model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 
-model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
+	model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 
-model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
+	model.add(Flatten())
 
-model.add(Flatten())
+	model.add(Dense(100,activation='relu'))
 
-model.add(Dense(100,activation='relu'))
+	model.add(Dense(50,activation='relu'))
 
-model.add(Dense(50,activation='relu'))
+	model.add(Dense(10,activation='relu'))
 
-model.add(Dense(10,activation='relu'))
+	model.add(Dense(1))
 
-model.add(Dense(1))
+	model.compile('adam', 'mse', ['accuracy'])
+	
+	print('New Model is built')
 
-model.compile('adam', 'mse', ['accuracy'])
 history = model.fit(X_normalized, y_train, nb_epoch=EPOCH, validation_split=0.2)
 
 model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
