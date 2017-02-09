@@ -20,7 +20,7 @@ def preprocess_input(img):
 
 X_train = []
 y_train = []
-EPOCH = 50
+EPOCH = 10
 DROPOUT = 0.5
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
