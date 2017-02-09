@@ -21,7 +21,7 @@ X_fname=[]
 y_train = []
 EPOCH = 5
 DROPOUT = 0.5
-BATCH_SIZE = 128
+BATCH_SIZE = 256 #28
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
@@ -39,8 +39,8 @@ with open('data/driving_log.csv') as csvfile:
 		#X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
 		i+=1
-		if(i==20000):
-			break
+		#if(i==20000):
+		#	break
 	#X_train = np.asarray(X_train,dtype=np.float32)
 	X_fname = np.asarray(X_fname)
 	y_train = np.asarray(y_train,dtype=np.float32)
