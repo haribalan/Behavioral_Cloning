@@ -76,7 +76,7 @@ except:
 
 	model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 
-	model.add(Dropout(DROPOUT))
+	#model.add(Dropout(DROPOUT))
 
 	model.add(Flatten())
 
