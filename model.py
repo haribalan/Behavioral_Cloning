@@ -52,7 +52,7 @@ def normalize_grayscale(image_data):
     b = 0.5
     grayscale_min = 0
     grayscale_max = 255
-    return image_data/255
+    return image_data #/255
     #return a+st1
     #return a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
 	
