@@ -21,6 +21,7 @@ def preprocess_input(img):
 X_train = []
 y_train = []
 EPOCH = 50
+DROPOUT = 0.5
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
@@ -68,6 +69,8 @@ except:
 	model.add(Convolution2D(36, 5, 5,subsample=(2, 2),activation='relu'))
 
 	model.add(Convolution2D(48, 5, 5,subsample=(2, 2),activation='relu'))
+	
+	model.add(Dropout(DROPOUT))
 
 	model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 
@@ -76,6 +79,8 @@ except:
 	model.add(Flatten())
 
 	model.add(Dense(100,activation='relu'))
+	
+	model.add(Dropout(DROPOUT))
 
 	model.add(Dense(50,activation='relu'))
 
