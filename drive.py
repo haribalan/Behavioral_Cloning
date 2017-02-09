@@ -38,7 +38,7 @@ def telemetry(sid, data):
     image = Image.open(BytesIO(base64.b64decode(imgString)))
     image_array = np.asarray(image)
     transformed_image_array = preprocess_input(image_array)
-    transformed_image_array = normalize_grayscale(transformed_image_array)
+    #transformed_image_array = normalize_grayscale(transformed_image_array)
     transformed_image_array = transformed_image_array[None, :, :, :]
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
     steering_angle = float(model.predict(transformed_image_array, batch_size=1))
@@ -72,7 +72,7 @@ def normalize_grayscale(image_data):
     b = 0.5
     grayscale_min = 0
     grayscale_max = 255
-    return image_data/255 #a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
+    return image_data/255.0 - 0.5 #a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Remote Driving')
