@@ -76,12 +76,12 @@ except:
 
 	model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 
+	model.add(Dropout(DROPOUT))
+
 	model.add(Flatten())
 
 	model.add(Dense(100,activation='relu'))
 	
-	model.add(Dropout(DROPOUT))
-
 	model.add(Dense(50,activation='relu'))
 
 	model.add(Dense(10,activation='relu'))
