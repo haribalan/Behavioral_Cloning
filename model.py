@@ -15,13 +15,13 @@ def roi(img):
     return cv2.resize(img, (200, 66))
 
 def preprocess_input(img):
-    return roi(cv2.cvtColor(img, cv2.COLOR_RGB2YUV))
+    return roi(img) #cv2.cvtColor(img, cv2.COLOR_RGB2YUV))
 	
 X_fname=[]
 y_train = []
-EPOCH = 5
-DROPOUT = 0.5
-BATCH_SIZE = 256 #28
+EPOCH = 25
+DROPOUT = 0.2
+BATCH_SIZE = 128 #28
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
@@ -47,7 +47,7 @@ with open('data/driving_log.csv') as csvfile:
 	
 X_fname, y_train = shuffle(X_fname, y_train)	
 
-X_fname, X_fname_val, y_train, y_validation = train_test_split(X_fname, y_train, test_size=0.20) #, random_state=52)
+X_fname, X_fname_val, y_train, y_validation = train_test_split(X_fname, y_train, test_size=0.10) #, random_state=52)
 
 
 def imgGen(files):
@@ -69,7 +69,9 @@ def gen_batches(imgs, angles, batch_size):
 		batch_x, batch_y = imgGen(imgs[offset:end]), angles[offset:end] #imgs[indeces], angles[indeces]
 		offset = end
 		yield batch_x, batch_y
-		
+#import matplotlib.pyplot as plt
+#plt.imshow(imgGen(['data/IMG/center_2016_12_01_13_35_29_104.jpg']).squeeze())
+#plt.show()		
 		
 try:
 	if(len(sys.argv)>1):
