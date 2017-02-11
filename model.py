@@ -62,11 +62,12 @@ def gen_batches(imgs, angles, batch_size):
 	num_examples = len(imgs)
 	offset = 0
 	while True:
-		#indeces = np.random.choice(num_examples, batch_size)
+		indeces = np.random.choice(num_examples, batch_size)
 		if(offset>=num_examples):
 			offset = 0
 		end = offset + batch_size
-		batch_x, batch_y = imgGen(imgs[offset:end]), angles[offset:end] #imgs[indeces], angles[indeces]
+		#batch_x, batch_y = imgGen(imgs[offset:end]), angles[offset:end] #imgs[indeces], angles[indeces]
+		batch_x, batch_y = imgGen(imgs[indeces]), angles[indeces]
 		offset = end
 		yield batch_x, batch_y
 #import matplotlib.pyplot as plt
