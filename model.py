@@ -11,11 +11,10 @@ from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
 from myutils import preprocess_input
 
-
 X_fname=[]
 y_train = []
 EPOCH = 5
-DROPOUT = 0.2
+DROPOUT = 0.4
 BATCH_SIZE = 128 #28
 
 with open('data/driving_log.csv') as csvfile:
