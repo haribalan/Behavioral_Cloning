@@ -9,21 +9,15 @@ from keras.models import Sequential,load_model
 from keras.layers.core import Dense, Activation, Flatten, Dropout, Lambda
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
+from myutils import preprocess_input
 
-def roi(img): 
-    img = img[60:140,40:280]
-    return cv2.resize(img, (200, 66))
 
-def preprocess_input(img):
-    return roi(img) 
-	#return roi(cv2.cvtColor(img, cv2.COLOR_RGB2YUV))
-	#return roi(cv2.cvtColor(img, cv2.COLOR_RGB2GRAY))
-	
 X_fname=[]
 y_train = []
-EPOCH = 8
-DROPOUT = 0.4
+EPOCH = 5
+DROPOUT = 0.2
 BATCH_SIZE = 128 #28
+
 with open('data/driving_log.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	next(readCSV,None)
@@ -41,7 +35,7 @@ with open('data/driving_log.csv') as csvfile:
 		#X_train.append(preprocess_input(img))
 		y_train.append(row[3].strip())
 		i+=1
-		#if(i==5000):
+		#if(i==1000):
 		#	break
 	#X_train = np.asarray(X_train,dtype=np.float32)
 	X_fname = np.asarray(X_fname)
@@ -65,13 +59,14 @@ def gen_batches(imgs, angles, batch_size):
 	offset = 0
 	while True:
 		indeces = np.random.choice(num_examples, batch_size)
-		if(offset>=num_examples):
-			offset = 0
-		end = offset + batch_size
-		#batch_x, batch_y = imgGen(imgs[offset:end]), angles[offset:end] 
 		batch_x, batch_y = imgGen(imgs[indeces]), angles[indeces]
-		offset = end
+		#if(offset>=num_examples):
+		#	offset = 0
+		#end = offset + batch_size
+		#batch_x, batch_y = imgGen(imgs[offset:end]), angles[offset:end] #imgs[indeces], angles[indeces]
+		#offset = end
 		yield batch_x, batch_y
+		
 #import matplotlib.pyplot as plt
 #plt.imshow(imgGen(['data/IMG/center_2016_12_01_13_35_29_104.jpg']).squeeze())
 #plt.show()		
@@ -108,8 +103,7 @@ except:
 #history = model.fit(X_train, y_train, nb_epoch=EPOCH, validation_split=0.2)
 history = model.fit_generator(gen_batches(X_fname, y_train, BATCH_SIZE), len(X_fname),EPOCH,validation_data=gen_batches(X_fname_val, y_validation, BATCH_SIZE),nb_val_samples=len(X_fname_val))
 
-model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('lenet_model.h5')  # creates a HDF5 file 'my_model.h5'
 
 steering_angle = float(model.predict(imgGen(X_fname[1:2]), batch_size=1))
 print('y: %f  predict: %f'%(y_train[1:2],steering_angle))
-

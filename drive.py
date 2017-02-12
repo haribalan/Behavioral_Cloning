@@ -6,7 +6,7 @@ import numpy as np
 import socketio
 import eventlet
 import eventlet.wsgi
-import time
+import time, sys
 from PIL import Image
 from PIL import ImageOps
 from flask import Flask, render_template
@@ -14,7 +14,7 @@ from io import BytesIO
 import cv2
 from keras.models import model_from_json,load_model
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array
-
+from myutils import preprocess_input, normalize_grayscale
 # Fix error with Keras and TensorFlow
 import tensorflow as tf
 tf.python.control_flow_ops = tf
@@ -38,7 +38,7 @@ def telemetry(sid, data):
     image = Image.open(BytesIO(base64.b64decode(imgString)))
     image_array = np.asarray(image)
     transformed_image_array = preprocess_input(image_array)
-    #transformed_image_array = normalize_grayscale(transformed_image_array)
+    transformed_image_array = normalize_grayscale(transformed_image_array)
     transformed_image_array = transformed_image_array[None, :, :, :]
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
     steering_angle = float(model.predict(transformed_image_array, batch_size=1))
@@ -60,20 +60,6 @@ def send_control(steering_angle, throttle):
     'throttle': throttle.__str__()
     }, skip_sid=True)
 
-def roi(img): 
-    img = img[60:140,40:280]
-    return cv2.resize(img, (200, 66))
-
-def preprocess_input(img):
-    return roi(cv2.cvtColor(img, cv2.COLOR_RGB2YUV))
-
-def normalize_grayscale(image_data):
-    a = -0.5
-    b = 0.5
-    grayscale_min = 0
-    grayscale_max = 255
-    return image_data/255.0 - 0.5 #a + ( ( (image_data - grayscale_min)*(b - a) )/( grayscale_max - grayscale_min ) )
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Remote Driving')
     parser.add_argument('model', type=str,
@@ -91,7 +77,8 @@ if __name__ == '__main__':
 
     #model.compile("adam", "mse")
     #weights_file = args.model.replace('json', 'h5')
-    model = load_model('my_model.h5') #.load_weights(weights_file)
+    f_name = sys.argv[1]
+    model = load_model(f_name) #.load_weights(weights_file)
 
     # wrap Flask application with engineio's middleware
     app = socketio.Middleware(sio, app)
