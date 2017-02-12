@@ -6,13 +6,13 @@ from keras.models import Sequential,load_model
 from keras.layers.core import Dense, Activation, Flatten, Dropout, Lambda
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
-from myutils import preprocess_input, read_data_files
+from myutils import preprocess_input, read_data_files, normalize_grayscale
 
 X_fname=[]
 y_train = []
-EPOCH = 2
+EPOCH = 20
 DROPOUT = 0.4
-BATCH_SIZE = 8 #28
+BATCH_SIZE = 128 #28
 
 X_fname, X_fname_val, y_train, y_validation = read_data_files()
 
@@ -32,9 +32,6 @@ def gen_batches(imgs, angles, batch_size):
 		batch_x, batch_y = imgGen(imgs[indeces]), angles[indeces]
 		yield batch_x, batch_y
 		
-def normalize_grayscale(image_data):
-    return image_data/255.0 - 0.5 
-	
 try:
 	if(len(sys.argv)!=2):
 		print('Usage: python model.py <arg>')
@@ -47,7 +44,7 @@ except:
 	print('New Model built: '+model_file)
 	model = Sequential()
 	if(model_file=='lenet'):
-		model.add(Lambda(lambda x: normalize_grayscale(x), input_shape=(66,200,3)))
+		model.add(Lambda(normalize_grayscale, input_shape=(66,200,3)))
 		model.add(Convolution2D(32, 3, 3, border_mode='valid'))
 		model.add(MaxPooling2D(pool_size=(2, 2), border_mode='valid'))
 		model.add(Dropout(DROPOUT))
@@ -64,7 +61,7 @@ except:
 		model.add(Dense(10,activation='relu'))
 		model.add(Dense(1))
 	elif(model_file=='nvidia'):
-		model.add(Lambda(lambda x: normalize_grayscale(x), input_shape=(66,200,3)))
+		model.add(Lambda(normalize_grayscale, input_shape=(66,200,3)))
 		model.add(Convolution2D(24, 5, 5,subsample=(2, 2),activation='relu')) #160, 320, 3)))
 		model.add(Convolution2D(36, 5, 5,subsample=(2, 2),activation='relu'))
 		model.add(Convolution2D(48, 5, 5,subsample=(2, 2),activation='relu'))
