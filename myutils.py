@@ -37,10 +37,10 @@ def read_data_files():
 			y_train.append(row[3].strip())
 			#Since I use beta simulator which does not create left and right images so handling it as separate case
 			if(row[1].strip()!=''):
-				X_fname.append('data/'+file_name)
+				X_fname.append('data/'+row[1])
 				y_train.append(str(float(row[3].strip())+correction))
 			if(row[2].strip()!=''):
-				X_fname.append('data/'+file_name)
+				X_fname.append('data/'+row[2])
 				y_train.append(str(float(row[3].strip())-correction))
 			#i+=1
 			if(i==300):
