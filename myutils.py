@@ -26,7 +26,7 @@ def read_data_files():
 		next(readCSV,None)
 		i=0
 		for row in readCSV:
-			file_name = row[0]
+			file_name = row[0].strip()
 			try:
 				if(file_name.index('Hari')):
 					file_name = file_name.split('\\')[len(file_name.split('\\'))-1]
@@ -37,10 +37,10 @@ def read_data_files():
 			y_train.append(row[3].strip())
 			#Since I use beta simulator which does not create left and right images so handling it as separate case
 			if(row[1].strip()!=''):
-				X_fname.append('data/'+row[1])
+				X_fname.append('data/'+row[1].strip())
 				y_train.append(str(float(row[3].strip())+correction))
 			if(row[2].strip()!=''):
-				X_fname.append('data/'+row[2])
+				X_fname.append('data/'+row[2].strip())
 				y_train.append(str(float(row[3].strip())-correction))
 			#i+=1
 			if(i==300):
