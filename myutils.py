@@ -42,9 +42,9 @@ def read_data_files():
 			if(row[2].strip()!=''):
 				X_fname.append('data/'+row[2].strip())
 				y_train.append(str(float(row[3].strip())-correction))
-			#i+=1
-			if(i==300):
-				break
+			i+=1
+			#if(i==300):
+			#	break
 		X_fname = np.asarray(X_fname)
 		y_train = np.asarray(y_train,dtype=np.float32)
 		

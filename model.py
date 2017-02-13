@@ -6,12 +6,13 @@ from keras.models import Sequential,load_model
 from keras.layers.core import Dense, Activation, Flatten, Dropout, Lambda
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
+from keras.optimizers import Adam
 from myutils import preprocess_input, read_data_files, normalize_grayscale
 
 X_fname=[]
 y_train = []
 EPOCH = 20
-DROPOUT = 0.4
+DROPOUT = 0.2
 BATCH_SIZE = 128 #28
 
 X_fname, X_fname_val, y_train, y_validation = read_data_files()
@@ -78,7 +79,8 @@ except:
 		print('Check File Name. Note Usage: python model.py <arg>')
 		print('Where arg can be <filename>.h5 or lenet or nvidia')
 		exit(-1)
-	model.compile('adam', 'mse', ['accuracy'])
+	
+	model.compile(optimizer = Adam(lr=0.001), loss='mean_squared_error', metrics=['accuracy'])
 	model_file=model_file+'_model.h5'
 	
 history = model.fit_generator(gen_batches(X_fname, y_train, BATCH_SIZE), len(X_fname),EPOCH,validation_data=gen_batches(X_fname_val, y_validation, BATCH_SIZE),nb_val_samples=len(X_fname_val))
