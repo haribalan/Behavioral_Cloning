@@ -40,8 +40,8 @@ Model was then trained on data collected using the vehicle's camera images colle
 
 Images were cropped to retain only the area of interest by removing top portion (up to middle of the image) and bottom (very close to hood of the car) areas and primarily have only the road/lane section. 
 
-![alt text](images/full_img.PNG"Full Image Before Crop")
-![alt text](images/crop_img.png"Image After Crop")
+![alt text](images/full_img.PNG "Full Image Before Crop")
+![alt text](images/crop_img.png "Image After Crop")
 
 Images were then resized to 200*66 and then input into the deep learning model. On the deep learning model the first learn is Normalization which reduces the scale from 0 – 255 to -0.5 – 0.5 using Lambda layer.
 
