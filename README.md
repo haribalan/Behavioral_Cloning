@@ -5,7 +5,9 @@
 The goal of the project is to performs behavioral cloning, which involves training an deep neural network to mimic human driving behavior in a simulator by predicting Steering Angles from Camera Images.
 
 ### Simulator
-Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device.
+Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device. Most of the training was done with this settings on a Windows 10 Laptop with i7 process:
+
+![alt text](images/sim_setting.PNG "Simulator Settings")
 
 ### Data collection
 Training data is collected by a manually driving around a track in the simulator. To train car to move away from the sides during autonomous mode and stay in middle of the lane and also avoid overfitting: explicit recording of pulling back into the middle of the lane was performed both from left, right and on deep curves. 
@@ -41,9 +43,9 @@ Skicit learn train_test_split was used to split the data into training and valid
 ##### Images processing and normalization
 
 Images were cropped to retain only the area of interest by removing top portion (up to middle of the image) and bottom (very close to hood of the car) areas and primarily have only the road/lane section. 
-######## Full Image
+###### Full Image
 ![alt text](images/full.png "Full Image Before Crop")
-######## Cropped Image
+###### Cropped Image
 ![alt text](images/cropped.PNG "Image After Crop")
 
 Images were then resized to 200*66 and then input into the deep learning model. On the deep learning model the first learn is Normalization which reduces the scale from 0 – 255 to -0.5 – 0.5 using Lambda layer.
