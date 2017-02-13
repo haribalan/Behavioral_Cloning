@@ -54,6 +54,10 @@ Moving average where n=3 was performed to smooth out the angles.
 
 ### Model Architecture
 
+The project was coded and test against two architectural models. One based on the Nvidia paper* and other based on LeNet^ model.
+Models were run upto 20 Epcohs and dropout was used and final value was set at 0.2 after trying out 0.5, 0.4. Batch size was set to a standard at 128. The inital training was done on AWS GPU system but later ran on Intel i7 Cpus due to cost constraints.
+Both model were trained with *Generators* to perform and utilize optional memory. Keras.fit_generator was fed by batch function that looped throught data continously and provided batchs of 128 image,angle set to the model.
+
 ##### My model based on Nvidia
 ```
 ____________________________________________________________________________________________________
