@@ -12,6 +12,8 @@ Training data is collected by a manually driving around a track in the simulator
 
 Model was then trained on data collected using the vehicle's camera images collected from the manual demonstration. The final trained model is tested against the same test track by driving the car on autonomous mode. 
 
+Skicit learn train_test_split was used to split the data into training and validation at 80% to 20% respectively. And were shuffled for better training fit and  reduce bias.
+
 #### Project Dependency
 *	Udacity behavioral cloning simulator
 *	AWS GPU (and CPU pc) used for training 
@@ -60,6 +62,8 @@ Models were run upto 20 Epcohs and dropout was used and final value was set at 0
 The inital training was done on AWS GPU system but later ran on Intel i7 Cpus due to cost constraints.
 
 Both model were trained with *Generators* to perform and utilize optional memory. Keras.fit_generator was fed by batch function that looped throught data continously and provided batchs of 128 image,angle set to the model. Thus, only a portion entire training and validation set were stored in memory, and the images themselves were read from disk only when new batch was requested.
+
+Relu activation was used between layers on the both the CNN models.
 
 Adam optimizer was used to minimize the mean squared error (MSE) with learning rate of 0.001. The loss function was MSE because predicting steering angles is a regression problem.
 
