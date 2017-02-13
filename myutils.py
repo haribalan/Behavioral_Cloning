@@ -4,7 +4,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
-correction = 0.1
+CORRECTION = 0.1
+TRAIL = False
+LEFT_RIGHT_CAM = False
 
 def roi(img): 
     img = img[60:140,40:280]
@@ -36,15 +38,17 @@ def read_data_files():
 			X_fname.append('data/'+file_name)	
 			y_train.append(row[3].strip())
 			#Since I use beta simulator which does not create left and right images so handling it as separate case
-			if(row[1].strip()!=''):
-				X_fname.append('data/'+row[1].strip())
-				y_train.append(str(float(row[3].strip())+correction))
-			if(row[2].strip()!=''):
-				X_fname.append('data/'+row[2].strip())
-				y_train.append(str(float(row[3].strip())-correction))
-			i+=1
-			#if(i==300):
-			#	break
+			if LEFT_RIGHT_CAM:
+				if(row[1].strip()!=''):
+					X_fname.append('data/'+row[1].strip())
+					y_train.append(str(float(row[3].strip())+CORRECTION))
+				if(row[2].strip()!=''):
+					X_fname.append('data/'+row[2].strip())
+					y_train.append(str(float(row[3].strip())-CORRECTION))
+			if TRAIL:
+				i+=1
+				if(i==300):
+					break
 		X_fname = np.asarray(X_fname)
 		y_train = np.asarray(y_train,dtype=np.float32)
 		
