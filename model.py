@@ -11,7 +11,7 @@ from myutils import preprocess_input, read_data_files, normalize_grayscale
 
 X_fname=[]
 y_train = []
-EPOCH = 7
+EPOCH = 20
 DROPOUT = 0.2
 BATCH_SIZE = 128 #28
 

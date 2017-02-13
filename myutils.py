@@ -4,10 +4,10 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
-CORRECTION = 0.1
+CORRECTION = 0.18
 TRAIL = False
-LEFT_RIGHT_CAM = False
-
+LEFT_RIGHT_CAM = True
+MOVING_AVG_WINDOW = 3
 def roi(img): 
     img = img[60:140,40:280]
     return cv2.resize(img, (200, 66))
@@ -20,6 +20,18 @@ def preprocess_input(img):
 def normalize_grayscale(image_data):
     return image_data/255.0 - 0.5 
 
+	
+def moving_average(a,n):
+	'''
+	Calculate moving average
+	http://stackoverflow.com/a/14314054
+	'''
+	if n==1:
+		return a
+	ret = np.cumsum(a, dtype=float)
+	ret[n:] = ret[n:] - ret[:-n]
+	return ret[n - 1:] / n
+	
 def read_data_files():
 	X_fname=[]
 	y_train = []
@@ -51,9 +63,12 @@ def read_data_files():
 					break
 		X_fname = np.asarray(X_fname)
 		y_train = np.asarray(y_train,dtype=np.float32)
-		
+
+	#y_train = moving_average(y_train,MOVING_AVG_WINDOW)
+	#X_fname = X_fname[(MOVING_AVG_WINDOW - 1):] #[3 * (MOVING_AVG_WINDOW - 1):]
+
 	X_fname, y_train = shuffle(X_fname, y_train)	
 
-	X_fname, X_fname_val, y_train, y_validation = train_test_split(X_fname, y_train, test_size=0.10) #, random_state=52)
+	X_fname, X_fname_val, y_train, y_validation = train_test_split(X_fname, y_train, test_size=0.20) #, random_state=52)
 
 	return X_fname, X_fname_val, y_train, y_validation
