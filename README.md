@@ -5,12 +5,16 @@
 The goal of the project is to performs behavioral cloning, which involves training an deep neural network to mimic human driving behavior in a simulator by predicting Steering Angles from Camera Images.
 
 ### Simulator
-Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device.
+Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device. Most of the training was done with this settings on a Windows 10 Laptop with i7 process:
+
+![alt text](images/sim_setting.PNG "Simulator Settings")
 
 ### Data collection
 Training data is collected by a manually driving around a track in the simulator. To train car to move away from the sides during autonomous mode and stay in middle of the lane and also avoid overfitting: explicit recording of pulling back into the middle of the lane was performed both from left, right and on deep curves. 
 
 Model was then trained on data collected using the vehicle's camera images collected from the manual demonstration. The final trained model is tested against the same test track by driving the car on autonomous mode. 
+
+Skicit learn train_test_split was used to split the data into training and validation at 80% to 20% respectively. And were shuffled for better training fit and  reduce bias.
 
 #### Project Dependency
 *	Udacity behavioral cloning simulator
@@ -39,10 +43,10 @@ Model was then trained on data collected using the vehicle's camera images colle
 ##### Images processing and normalization
 
 Images were cropped to retain only the area of interest by removing top portion (up to middle of the image) and bottom (very close to hood of the car) areas and primarily have only the road/lane section. 
-######## Full Image
-![alt text](images/full_img.PNG "Full Image Before Crop")
-######## Cropped Image
-![alt text](images/crop_img.png "Image After Crop")
+###### Full Image
+![alt text](images/full.png "Full Image Before Crop")
+###### Cropped Image
+![alt text](images/cropped.PNG "Image After Crop")
 
 Images were then resized to 200*66 and then input into the deep learning model. On the deep learning model the first learn is Normalization which reduces the scale from 0 – 255 to -0.5 – 0.5 using Lambda layer.
 
@@ -53,6 +57,17 @@ Images are then changed to COLOR_RGB2YUV mode, for better performance.
 Moving average where n=3 was performed to smooth out the angles.
 
 ### Model Architecture
+
+The project was coded and test against two architectural models. One based on the Nvidia paper* and other based on LeNet^ model.
+Models were run upto 20 Epcohs and dropout was used and final value was set at 0.2 after trying out 0.5, 0.4. Batch size was set to a standard at 128. 
+
+The inital training was done on AWS GPU system but later ran on Intel i7 Cpus due to cost constraints.
+
+Both model were trained with *Generators* to perform and utilize optional memory. Keras.fit_generator was fed by batch function that looped throught data continously and provided batchs of 128 image,angle set to the model. Thus, only a portion entire training and validation set were stored in memory, and the images themselves were read from disk only when new batch was requested.
+
+Relu activation was used between layers on the both the CNN models.
+
+Adam optimizer was used to minimize the mean squared error (MSE) with learning rate of 0.001. The loss function was MSE because predicting steering angles is a regression problem.
 
 ##### My model based on Nvidia
 ```
@@ -130,5 +145,11 @@ Non-trainable params: 0
 ```
 
 
+#### Future work and potential enhancements/experiments will be carried out for better smooth driving on the autonmous mode. Including 
+* Generating mode training dataset.
+* Using better input controller for smoother angles and/or explicit methods to smooth the angles
+* Implementing more regularization, data generation with trasformation, deeper understading and implementation of the Nvidia's model
+* Also try fine-tuning the later base convolution layers; Test different hyper-parameters, such as learning rate, dropout probability, steering angle offsets, etc.
+* work on totally new CNN architecture based on other image vision papers
 
 
