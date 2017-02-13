@@ -11,7 +11,7 @@ from myutils import preprocess_input, read_data_files, normalize_grayscale
 
 X_fname=[]
 y_train = []
-EPOCH = 20
+EPOCH = 7
 DROPOUT = 0.2
 BATCH_SIZE = 128 #28
 
@@ -66,7 +66,7 @@ except:
 		model.add(Convolution2D(24, 5, 5,subsample=(2, 2),activation='relu')) #160, 320, 3)))
 		model.add(Convolution2D(36, 5, 5,subsample=(2, 2),activation='relu'))
 		model.add(Convolution2D(48, 5, 5,subsample=(2, 2),activation='relu'))
-		model.add(Dropout(DROPOUT))
+		#model.add(Dropout(DROPOUT))
 		model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 		model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 		#model.add(Dropout(DROPOUT))

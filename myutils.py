@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
-correction = 0.2
+correction = 0.1
 
 def roi(img): 
     img = img[60:140,40:280]
