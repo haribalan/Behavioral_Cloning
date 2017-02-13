@@ -6,7 +6,7 @@ from sklearn.utils import shuffle
 
 CORRECTION = 0.18
 TRAIL = False
-LEFT_RIGHT_CAM = True
+LEFT_RIGHT_CAM = False
 MOVING_AVG_WINDOW = 3
 def roi(img): 
     img = img[60:140,40:280]

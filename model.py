@@ -11,7 +11,7 @@ from myutils import preprocess_input, read_data_files, normalize_grayscale
 
 X_fname=[]
 y_train = []
-EPOCH = 20
+EPOCH = 5
 DROPOUT = 0.2
 BATCH_SIZE = 128 #28
 
@@ -27,10 +27,19 @@ def imgGen(files):
 
 def gen_batches(imgs, angles, batch_size):
 	num_examples = len(imgs)
-	offset = 0
+	start = 0
+	end = batch_size
 	while True:
-		indeces = np.random.choice(num_examples, batch_size)
-		batch_x, batch_y = imgGen(imgs[indeces]), angles[indeces]
+		#indeces = np.random.choice(num_examples, batch_size)
+		#batch_x, batch_y = imgGen(imgs[indeces]), angles[indeces]
+		
+		batch_x, batch_y = imgGen(imgs[start:end]), angles[start:end]
+		start+=batch_size
+		end+=batch_size
+		if start >= num_examples:
+			start = 0
+			end = batch_size
+			
 		yield batch_x, batch_y
 		
 try:
@@ -69,7 +78,7 @@ except:
 		#model.add(Dropout(DROPOUT))
 		model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
 		model.add(Convolution2D(64, 3, 3,subsample=(1, 1),activation='relu'))
-		#model.add(Dropout(DROPOUT))
+		model.add(Dropout(DROPOUT))
 		model.add(Flatten())
 		model.add(Dense(100,activation='relu'))
 		model.add(Dense(50,activation='relu'))
@@ -82,7 +91,7 @@ except:
 	
 	model.compile(optimizer = Adam(lr=0.001), loss='mean_squared_error', metrics=['accuracy'])
 	model_file=model_file+'_model.h5'
-	
+	print(model.summary())
 history = model.fit_generator(gen_batches(X_fname, y_train, BATCH_SIZE), len(X_fname),EPOCH,validation_data=gen_batches(X_fname_val, y_validation, BATCH_SIZE),nb_val_samples=len(X_fname_val))
 model.save(model_file)  # creates a HDF5 file 'model.h5'
 

@@ -1,10 +1,10 @@
 *.zip
 *.exe
 *.csv
-*.jpg
-*.png
 Default Windows desktop 64-bit_Data
 beta_sim
 data
+dataOld
+test.py
 screenshot_and_oldcode
 __*
