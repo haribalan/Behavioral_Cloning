@@ -65,7 +65,7 @@ The inital training was done on AWS GPU system but later ran on Intel i7 Cpus du
 
 Both model were trained with *Generators* to perform and utilize optional memory. Keras.fit_generator was fed by batch function that looped throught data continously and provided batchs of 128 image,angle set to the model. Thus, only a portion entire training and validation set were stored in memory, and the images themselves were read from disk only when new batch was requested.
 
-Relu activation was used between layers on the both the CNN models.
+Intially I have used Relu activation, but later changed it to ELU activation between layers on the both the CNN models. (based on few reference including: http://www.picalike.com/blog/2015/11/28/relu-was-yesterday-tomorrow-comes-elu/ )
 
 Adam optimizer was used to minimize the mean squared error (MSE) with learning rate of 0.001. The loss function was MSE because predicting steering angles is a regression problem.
 
