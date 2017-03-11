@@ -24,11 +24,11 @@ def imgGen(files,angles):
 		for item in files:
 			x = misc.imread(item)
 			y = angles[index]
-			if(np.random.random()<.6):
+			if(np.random.random()<.19):
 				x, y = trans_image(x,y)
-			if(np.random.random()>.5):
+			if(np.random.random()>.85):
 				x=augment_brightness_camera_images(x)
-			random = np.random.randint(10)
+			random = np.random.randint(15)
 			# Flip image in 50% of the cases
 			# Thanks to Vivek Yadav for the idea
 			if (random == 0):

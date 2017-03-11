@@ -8,7 +8,8 @@ CORRECTION = 0.2
 TRAIL = False
 LEFT_RIGHT_CAM = True
 #data_dir = '../../../Behavioral_Cloning/real/data/'
-data_dir = '../../../Behavioral_Cloning/real/data2/'
+#data_dir = '../../../Behavioral_Cloning/real/data2/'
+data_dir = '../../../Behavioral_Cloning/real/driving_data/'
 	
 def normalize_grayscale(image_data):
     return image_data/255.-0.5
