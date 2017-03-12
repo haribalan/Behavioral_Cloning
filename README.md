@@ -76,7 +76,7 @@ if(np.random.random()<.19):
 
 ### Model Architecture
 
-The project was coded and test against two architectural models. One based on the Nvidia paper* and other based on LeNet^ model.
+The project was coded and test against two architectural models. One based on the Nvidia paper and other based on LeNet model.
 
 ###### Note that Nvidia architectural model was choosen as it trained better (more complex design) and it has been used for the final work and for all project submission.
 
