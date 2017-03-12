@@ -64,9 +64,7 @@ On the deep learning model the first learn is Normalization which reduces the sc
 For the LEFT and RIGHT images from the camera, an angle correction of +/-0.2 was used.
 
 Translation function was used to augment the steering angles and images randomly and avoid overfitting. Similarly brightness augmentation was performed on the dataset randomly.  Please note both of these was done a only certain amount of the datasets, and I used different percentage of data set to this transformation. It was controled by simple a IF clause:
- 	if(np.random.random()<.19)     
-
-_Ref: from Vivek Yadav blog write up.
+ 	<code>if(np.random.random()<.19)</code>
 
 Images were also subjected to random flips. Where the angles was negated and images was flipped using numpy's _fliplr_ method.
 if(np.random.random()<.19):
