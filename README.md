@@ -34,14 +34,15 @@ Skicit learn train_test_split was used to split the data into training and valid
     *	Scikit Learn
 
 #### Submission
-* model.py – This has both LENET^ and NVIDIA* model. It can run both based on the inputs key (lenet or nvidia)
+	<pre>
+	* model.py – This has both LENET^ and NVIDIA* model. It can run both based on the inputs key (lenet or nvidia)
 	* *https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
 	* ^http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
-	<pre>
-	*	Run:  python model.py lenet  [or]  python model.py nvidia
-*	drive.py - The script to load the trained model, interface with the simulator, and drive the car
+	*	New Training:  python model.py lenet  [or]  python model.py nvidia
+	*	Re-Train or Traing more:  python model.py mode-file.h5
+	*	drive.py - The script to load the trained model, interface with the simulator, and drive the car
 	*	Run: python driver.py (nvidia/lenet)_model.h5
-*	(nvidia/lenet)_model.h5 - The model weights
+	*	(nvidia/lenet)_model.h5 - The model weights
 	*	myutils.py – utility methods
 	</pre>
 ### Data Processing
