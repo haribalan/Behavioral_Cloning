@@ -5,14 +5,17 @@
 The goal of the project is to performs behavioral cloning, which involves training an deep neural network to mimic human driving behavior in a simulator by predicting Steering Angles from Camera Images.
 
 ### Simulator
-Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device. Most of the training was done with this settings on a Windows 10 Laptop with i7 process:
+Training data was generated using the beta simulator for this project. Beta simulator uses the mice to drive the car around track providing more smoother angles than the Stable simulator which uses Keyboard as input device. Most of the training was done with this settings on a Windows 10 Laptop with i7 process, with multiple settings screen/graphics quality to get best result. (sample settings here). 
 
 ![alt text](images/sim_setting.PNG "Simulator Settings")
 
-### Data collection
-Training data is collected by a manually driving around a track in the simulator. To train car to move away from the sides during autonomous mode and stay in middle of the lane and also avoid overfitting: explicit recording of pulling back into the middle of the lane was performed both from left, right and on deep curves. 
+Autonomous run was done and recorded on the follow settings, on a Windows 10, I7 computer (HP Envy x360):
 
-Model was then trained on data collected using the vehicle's camera images collected from the manual demonstration. The final trained model is tested against the same test track by driving the car on autonomous mode. 
+![alt text](images/simulator_settings_run.PNG "Automnomous Run Settings")
+
+
+### Data collection
+Training data was collected by a manually driving around a track in the simulator. To train car to move away from the sides during autonomous mode and stay in middle of the lane and also avoid overfitting: explicit recording of pulling back into the middle of the lane was performed both from left, right and on deep curves. Model was then trained on data collected using the vehicle's camera images collected from the manual demonstration. The final trained model is tested against the same test track by driving the car on autonomous mode. 
 
 Skicit learn train_test_split was used to split the data into training and validation at 80% to 20% respectively. And were shuffled for better training fit and  reduce bias.
 
@@ -32,12 +35,13 @@ Skicit learn train_test_split was used to split the data into training and valid
 * model.py – This has both LENET^ and NVIDIA* model. It can run both based on the inputs key (lenet or nvidia)
 	* *https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
 	* ^http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
+	<code>
 	*	Run:  python model.py lenet  [or]  python model.py nvidia
 *	drive.py - The script to load the trained model, interface with the simulator, and drive the car
 	*	Run: python driver.py <nvidia/lenet>_model.h5
 *	<nvidia/lenet>_model.h5 - The model weights
 	*	myutils.py – utility methods
-
+	</code>
 ### Data Processing
 
 ##### Images processing and normalization
