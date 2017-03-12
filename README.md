@@ -5,6 +5,7 @@
 The goal of the project is to performs behavioral cloning, which involves training an deep neural network to mimic human driving behavior in a simulator by predicting Steering Angles from Camera Images.
 
 Simulation Result Recording: https://youtu.be/jDEm-47VnUE
+
 (Video.py output using new driver): https://youtu.be/409SvJ9mZM0   
 
 ### Simulator
@@ -195,6 +196,7 @@ Training the car on other tracks and in reverse direction improved the model. Fo
 ![alt text](images/auto.PNG "Simulator Settings")
 
 Simulation Result Recording: https://youtu.be/jDEm-47VnUE
+
 (Video.py output using new driver): https://youtu.be/409SvJ9mZM0   
 
 #### Future work and potential enhancements/experiments will be carried out for better smooth driving on the autonmous mode. Including 
