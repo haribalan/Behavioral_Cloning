@@ -76,11 +76,11 @@ if(np.random.random()<.19):
 
 ### Model Architecture
 
-The project was coded and test against two architectural models. One based on the Nvidia paper and other based on LeNet model.
+##### Note that Nvidia architectural model was choosen as it trained better and it has been used for the final work and for all project submission.
 
-###### Note that Nvidia architectural model was choosen as it trained better (more complex design) and it has been used for the final work and for all project submission.
+The project was coded and test against two architectural models. One based on the Nvidia paper and other based on LeNet model. Nvidia architectural model was selected and used for this project.
 
-Models were run upto 25 Epcohs and dropout was used and final value was set at 0.3 after trying out 0.5, 0.4. Batch size was set to a standard at 64 (but also tried 128). However, I used Keras callbacks EarlyStopping (with different patience settings) and ModelCheckpoint, which was useful in exiting the training if there was no substantial improvements. 
+Model was run upto 25 Epcohs and dropout was used and final value was set at 0.3 after trying out 0.5, 0.4. Batch size was set to a standard at 64 (but also tried 128). However, I used Keras callbacks EarlyStopping (with different patience settings) and ModelCheckpoint, which was useful in exiting the training if there was no substantial improvements. 
 
 The inital training was done on AWS GPU system but later ran on Intel i7 Cpus due to cost constraints.
 
