@@ -192,6 +192,10 @@ ________________________________________________________________________________
 The training the car to drive autonomously took a lot of tries including multiple image augumentation techniques, differnt hyper-parameter settings, different simulator settings, playing with model layers and dropouts, etc. I also learnt that training on massive data does not necceassarily make model better at times overfitting the data, hence I started using lesser datasets relatively. (Earlier I did lots of lap and trainied the model).
 Training the car on other tracks and in reverse direction improved the model. For me this project taught me the importance of data set used for training and amount of influence of pre-processing and data augmentation.
 
+![alt text](images/auto.PNG "Simulator Settings")
+
+Simulation Result Recording: https://youtu.be/jDEm-47VnUE
+
 #### Future work and potential enhancements/experiments will be carried out for better smooth driving on the autonmous mode. Including 
 * Generating mode training dataset - From the point of variety not just lapping on same track.
 * Using better input controller for smoother angles and/or explicit methods to smooth the angles
